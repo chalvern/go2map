@@ -23,7 +23,6 @@ b:
 ## 待跟进
 
 * FlatMap 的方法目前只根据需要实现了部分，待进一步完善（欢迎提交 merge 贡献力量）。
-* 完善英文文档（由于本人以中文表达为主，同时精力有限，英文文档无法及时跟进，如果对本项目感兴趣的话欢迎帮忙翻译）。
 * 扩展 JSON 类似的转变功能。
 
 
@@ -36,11 +35,14 @@ package main
 
 import (
 	"fmt"
+	"path"
+	"runtime"
 
 	"github.com/chalvern/go2map"
 )
 
 func main() {
+	// convert from bytes
 	var data = `
 a: Easy!
 b:
@@ -54,6 +56,13 @@ b:
 	m := go2map.Yaml2Map([]byte(data))
 	b1, _ := m.GetStringOf("b.1")
 	fmt.Println(b1)
+
+	// convert from filePath
+	_, file, _, _ := runtime.Caller(0)
+	yamlFile := path.Join(path.Dir(file), "example.yaml")
+	m2 := go2map.Yaml2MapFromFile(yamlFile)
+	jingweiLink, _ := m2.GetStringOf("zh.blog.jingwei.link")
+	fmt.Println(jingweiLink)
 }
 
 ```
