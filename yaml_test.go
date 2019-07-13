@@ -1,10 +1,10 @@
 package go2map_test
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/chalvern/go2map"
+	"github.com/stretchr/testify/assert"
 )
 
 var data = `
@@ -20,5 +20,13 @@ b:
 
 func TestYaml2Map(t *testing.T) {
 	m := go2map.Yaml2Map([]byte(data))
-	fmt.Printf("m is: %#v", m)
+	keys := []string{}
+	for k, _ := range m {
+		keys = append(keys, k)
+	}
+	assert.Contains(t, keys, "a")
+	assert.Contains(t, keys, "b.c")
+	assert.Contains(t, keys, "b.d")
+	assert.Contains(t, keys, "b.1")
+	assert.Contains(t, keys, "b.2")
 }
