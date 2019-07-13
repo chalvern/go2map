@@ -1,0 +1,40 @@
+package go2map
+
+import (
+	"fmt"
+
+	"github.com/chalvern/sugar"
+	"gopkg.in/yaml.v2"
+)
+
+// Yaml2Map convert yaml to go's map
+func Yaml2Map(yamlData []byte) map[string]interface{} {
+	rawMap := make(map[interface{}]interface{})
+	err := yaml.Unmarshal(yamlData, &rawMap)
+	if err != nil {
+		sugar.Fatalf("error: %v", err)
+	}
+
+	targetMap := make(map[string]interface{})
+	nestedMap2FlatMap(rawMap, targetMap, "")
+	return targetMap
+}
+
+// nestedMap2FlatMap convert nested Map to flat map
+// @rawMap nested map
+// @targetMap target flat map
+// @parentPath the parent hierarchy 'x.x' of 'x.x.x'
+func nestedMap2FlatMap(rawMap map[interface{}]interface{}, targetMap map[string]interface{}, parentPath string) {
+	if parentPath != "" {
+		parentPath += "."
+	}
+	for rawKey, rawValue := range rawMap {
+		rawKey := fmt.Sprintf("%v", rawKey)
+		switch v := rawValue.(type) {
+		case map[interface{}]interface{}:
+			nestedMap2FlatMap(v, targetMap, parentPath+rawKey)
+		default:
+			targetMap[parentPath+rawKey] = rawValue
+		}
+	}
+}
