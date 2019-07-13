@@ -8,14 +8,14 @@ import (
 )
 
 // Yaml2Map convert yaml to go's map
-func Yaml2Map(yamlData []byte) map[string]interface{} {
+func Yaml2Map(yamlData []byte) FlatMap {
 	rawMap := make(map[interface{}]interface{})
 	err := yaml.Unmarshal(yamlData, &rawMap)
 	if err != nil {
 		sugar.Fatalf("error: %v", err)
 	}
 
-	targetMap := make(map[string]interface{})
+	targetMap := make(FlatMap)
 	nestedMap2FlatMap(rawMap, targetMap, "")
 	return targetMap
 }
@@ -24,7 +24,7 @@ func Yaml2Map(yamlData []byte) map[string]interface{} {
 // @rawMap nested map
 // @targetMap target flat map
 // @parentPath the parent hierarchy 'x.x' of 'x.x.x'
-func nestedMap2FlatMap(rawMap map[interface{}]interface{}, targetMap map[string]interface{}, parentPath string) {
+func nestedMap2FlatMap(rawMap map[interface{}]interface{}, targetMap FlatMap, parentPath string) {
 	if parentPath != "" {
 		parentPath += "."
 	}
