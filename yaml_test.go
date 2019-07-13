@@ -7,7 +7,9 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var data = `
+func TestYaml2Map(t *testing.T) {
+
+	var data = `
 a: Easy!
 b:
   c: 2
@@ -17,8 +19,6 @@ b:
   - 21
   - 22
 `
-
-func TestYaml2Map(t *testing.T) {
 	m := go2map.Yaml2Map([]byte(data))
 	keys := []string{}
 	for k, _ := range m {
