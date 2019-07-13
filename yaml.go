@@ -7,7 +7,13 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-// Yaml2Map convert yaml to go's map
+// Yaml2MapFromFile convert content to go's flat map from file.
+func Yaml2MapFromFile(fileName string) FlatMap {
+	contentByte := mustReadFile(fileName)
+	return Yaml2Map(contentByte)
+}
+
+// Yaml2Map convert yaml to go's flat map
 func Yaml2Map(yamlData []byte) FlatMap {
 	rawMap := make(map[interface{}]interface{})
 	err := yaml.Unmarshal(yamlData, &rawMap)
