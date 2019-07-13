@@ -4,7 +4,7 @@
 
 Usage of Yaml in Golang project is boring, as STRUCT must be better defined first to mapping the Yaml content. **However, Yaml content always contains many enties which makes STRUCT defination very difficult.**
 
-Go2Map's target is to make usage of Yaml easier by **avoiding the definition of complex structs, it is also convenient to read values in yaml**.
+Go2Map's target is to make usage of Yaml easier by **avoiding the definition of complex structs**.
 
 ```yaml
 a: Easy!
