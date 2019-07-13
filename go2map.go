@@ -7,6 +7,15 @@ import (
 // FlatMap flatMap
 type FlatMap map[string]interface{}
 
+// MustGetStringOf path's value always returned
+func (fm FlatMap) MustGetStringOf(path string) (targetValue string) {
+	targetValue, err := fm.GetStringOf(path)
+	if err != nil {
+		targetValue = err.Error()
+	}
+	return
+}
+
 // GetStringOf return string value
 func (fm FlatMap) GetStringOf(path string) (targetValue string, err error) {
 	rawValue := fm[path]

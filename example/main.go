@@ -23,6 +23,7 @@ b:
 	m := go2map.Yaml2Map([]byte(data))
 	b1, _ := m.GetStringOf("b.1")
 	fmt.Println(b1)
+	fmt.Println(m.MustGetStringOf("b.100"))
 
 	// convert from filePath
 	_, file, _, _ := runtime.Caller(0)
@@ -30,4 +31,5 @@ b:
 	m2 := go2map.Yaml2MapFromFile(yamlFile)
 	jingweiLink, _ := m2.GetStringOf("zh.blog.jingwei.link")
 	fmt.Println(jingweiLink)
+	fmt.Println(m2.MustGetStringOf("zh.jingwei.blog.jingwei.link"))
 }
