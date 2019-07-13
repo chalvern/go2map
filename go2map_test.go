@@ -8,7 +8,7 @@ import (
 	"github.com/chalvern/go2map"
 )
 
-func TestFlatMapGetStringOf(t *testing.T) {
+func TestFlatMapGetMethod(t *testing.T) {
 	var data = `
 a: Easy!
 b:
@@ -20,8 +20,15 @@ b:
   - 22
 `
 	m := go2map.Yaml2Map([]byte(data))
+
+	// string
 	b1, err := m.GetStringOf("b.1")
 	assert.Nil(t, err)
 	assert.Equal(t, "test", b1)
+
+	// int
+	bc, err := m.GetIntOf("b.c")
+	assert.Nil(t, err)
+	assert.Equal(t, 2, bc)
 
 }
